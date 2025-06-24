@@ -10,6 +10,7 @@ public class Account implements AccountService {
 	
 	private final List<Transaction>transactions=new ArrayList<>();
 	
+	// Déposer un montant sur le compte
 	@Override
 	public void deposit(int amount) {
 		validateAmount(amount);
@@ -17,17 +18,23 @@ public class Account implements AccountService {
 		saveTransaction(amount);
 		
 	}
-
+	
+	// Retirer un montant du compte
 	@Override
 	public void withdraw(int amount) {
 		// TODO Auto-generated method stub
 		
+		validateAmount(amount);           
+        if (balance < amount) {
+            throw new IllegalArgumentException("Soldes insuffisants.");
+        }
+        balance -= amount;                
+        saveTransaction(-amount);         
+		
 	}
-
+  // Afficher historique des transactions
 	@Override
 	public void printStatement() {
-		// TODO Auto-generated method stub
-		
 		System.out.println("DATE | OPERATION | MONTANT | SOLDE");
         for (Transaction t : transactions) {
             System.out.println(t);
@@ -35,6 +42,7 @@ public class Account implements AccountService {
 		
 	}
 	
+	// Vérifie que le montant est supérieur a 0
 	 private void validateAmount(int amount) {
 	        if (amount <= 0) {
 	            throw new IllegalArgumentException("Amount doit etre  positive.");
