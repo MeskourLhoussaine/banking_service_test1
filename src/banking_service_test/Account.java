@@ -14,7 +14,7 @@ public class Account implements AccountService {
 	@Override
 	public void deposit(int amount) {
 		 if (!isValidAmount(amount)) {
-	            System.out.println("Erreur : le montant du dépôt doit être strictement positif.");
+	            System.out.println("Erreur : le montant du dépot doit etre strictement positif.");
 	            return;
 	        }
 	        balance += amount;
@@ -25,27 +25,33 @@ public class Account implements AccountService {
 	// Retirer un montant du compte
 	@Override
 	public void withdraw(int amount) {
-		// TODO Auto-generated method stub
-		
-		validateAmount(amount);           
-        if (balance < amount) {
-            throw new IllegalArgumentException("Soldes insuffisants.");
+		if (!isValidAmount(amount)) {
+            System.out.println("Erreur : le montant du retrait doit etre strictement positif.");
+            return;
         }
-        balance -= amount;                
-        saveTransaction(-amount);         
-		
+        if (amount > balance) {
+            System.out.println("Erreur : solde insuffisant pour effectuer le retrait.");
+            return;
+        }
+        balance -= amount;
+        saveTransaction(-amount);
 	}
   // Afficher historique des transactions
 	@Override
 	public void printStatement() {
-		System.out.println("DATE | OPERATION | MONTANT | SOLDE");
-        for (Transaction t : transactions) {
-            System.out.println(t);
-        }
+		 if (transactions.isEmpty()) {
+	            System.out.println("Aucune transaction à afficher.");
+	            return;
+	        }
+
+	        System.out.println("DATE | OPÉRATION | MONTANT | SOLDE");
+	        for (Transaction t : transactions) {
+	            System.out.println(t);
+	        }
 		
 	}
 	
-	// Vérifie que le montant est supérieur a 0
+	// Verifie que le montant est superieur a 0
 	 private void validateAmount(int amount) {
 	        if (amount <= 0) {
 	            throw new IllegalArgumentException("Amount doit etre  positive.");
