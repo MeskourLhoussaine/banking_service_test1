@@ -67,4 +67,9 @@ public class Account implements AccountService {
 	    private boolean isValidAmount(int amount) {
 	        return amount > 0;
 	    }
+	    
+	 // Pour les tests : permet de récupérer le solde actuel
+	    public int getBalance() {
+	        return balance;
+	    }
 }
