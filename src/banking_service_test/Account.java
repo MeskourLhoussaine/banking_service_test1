@@ -13,9 +13,12 @@ public class Account implements AccountService {
 	// Déposer un montant sur le compte
 	@Override
 	public void deposit(int amount) {
-		validateAmount(amount);
-		balance += amount;
-		saveTransaction(amount);
+		 if (!isValidAmount(amount)) {
+	            System.out.println("Erreur : le montant du dépôt doit être strictement positif.");
+	            return;
+	        }
+	        balance += amount;
+	        saveTransaction(amount);
 		
 	}
 	
@@ -52,5 +55,10 @@ public class Account implements AccountService {
 	// Enregistre une transaction dans la liste
 	    private void saveTransaction(int amount) {
 	        transactions.add(new Transaction(LocalDate.now(), amount, balance));
+	    }
+	    
+	 // Validation du montant (positif strictement)
+	    private boolean isValidAmount(int amount) {
+	        return amount > 0;
 	    }
 }

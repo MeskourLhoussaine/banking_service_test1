@@ -6,7 +6,8 @@ public class Test {
 		// TODO Auto-generated method stub
 		AccountService account = new Account();
 		account.deposit(1000);
-		account.withdraw(200);
+		account.deposit(2000);
+		account.withdraw(500);
 		account.printStatement();
 		
 	}
